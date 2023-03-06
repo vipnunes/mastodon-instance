@@ -1,0 +1,4 @@
+data/
+!data/.placeholder
+db.env
+app.env
