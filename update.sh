@@ -1,5 +1,10 @@
 #!/usr/bin/bash
 
+[ $# -eq 0 ] && { echo "Usage: $0 <mastodon version>"; exit 1; }
+
+echo "" > .env
+echo "MASTODON_VER=\"$1\"" >> .env
+
 DOC="$( which docker-compose )"
 
 $DOC down
