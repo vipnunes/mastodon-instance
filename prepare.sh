@@ -19,6 +19,7 @@ $DOC down
 echo "[ i ] Preparing instance ${DOMAIN}..."
 
 # Create db.env
+touch .env/db.env
 echo "" > ./env/db.env
 
 __PG_HOST="postgresql"
@@ -48,15 +49,12 @@ echo "ES_USER=elastic" >> ./env/db.env
 
 # generate passwords
 __PWD_PG=$( openssl rand -hex 16 )
-#__PWD_PU=$( openssl rand -hex 16 )
 __PWD_ES=$( openssl rand -hex 16 )
 
 echo "POSTGRES_PASSWORD=${__PWD_PG}" >> ./env/db.env
 echo "DB_PASS=${__PWD_PG}" >> ./env/db.env
 echo "ELASTIC_PASSWORD=${__PWD_ES}" >> ./env/db.env
 echo "ES_PASS=${__PWD_ES}" >> ./env/db.env
-
-echo "DATABASE_URL=postgresql://$__DB_USER:$__PWD_PG@$__PG_HOST:5432/$__PG_DB" >> ./env/db.env
 
 [ ! -s ./env/db.env ] && { echo "[ ! ] Failed to create database environment file."; exit 1; }
 echo "[ i ] Database environment file created."
@@ -65,6 +63,7 @@ echo "[ i ] Database environment file created."
 chmod 0600 ./env/db.env
 
 # Create app.env
+touch .env/app.env
 echo "" > ./env/app.env
 
 echo "S3_ENABLED=false" >> ./env/app.env
@@ -76,7 +75,7 @@ echo "SINGLE_USER_MODE=false" >> ./env/app.env
 # do not serve static files via rails
 echo "RAILS_SERVE_STATIC_FILES=false" >> ./env/app.env
 # instance locale - CZ
-echo "DEFAULT_LOCALE=cz" >> ./env/app.env
+echo "DEFAULT_LOCALE=cs" >> ./env/app.env
 
 __S_KEY=$( openssl rand -hex 64 )
 __S_OTP=$( openssl rand -hex 64 )

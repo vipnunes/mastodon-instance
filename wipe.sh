@@ -3,6 +3,8 @@
 docker-compose down
 rm -rf ./data && mkdir ./data
 touch ./data/.placeholder
+touch .env/app.env
+touch .env/db.env
 echo "" > ./env/app.env
 echo "" > ./env/db.env
 touch ./env/smtp.env
