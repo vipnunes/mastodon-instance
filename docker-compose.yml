@@ -24,7 +24,7 @@ services:
     healthcheck:
       test: ['CMD', 'pg_isready', '-U', 'postgres']
     volumes:
-      - db-postgresql:/var/lib/postgresql/data
+      - db-postgresql:/var/lib/postgresql
     environment:
       - 'POSTGRES_HOST_AUTH_METHOD=trust'
     env_file:
@@ -38,7 +38,7 @@ services:
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
     volumes:
-      - db-redis:/data/redis
+      - db-redis:/var/lib/redis
 
   redis-cache:
     image: redis:7-alpine
@@ -69,7 +69,7 @@ services:
     healthcheck:
        test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
     volumes:
-       - db-elasticsearch:/usr/share/elasticsearch/data
+       - db-elasticsearch:/var/lib/elasticsearch
     ulimits:
       memlock:
         soft: -1
@@ -85,7 +85,6 @@ services:
       - ./env/app.env
       - ./env/db.env
       - ./env/smtp.env
-    #command: 'bash -c "/provision.sh; rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"'
     command: 'bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"'
     networks:
       - internal_network
