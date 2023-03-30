@@ -22,9 +22,9 @@ services:
     networks:
       - internal_network
     healthcheck:
-      test: ['CMD', 'pg_isready', '-U', 'postgres']
+      test: ['CMD', 'pg_isready', '-U', 'mastodon']
     volumes:
-      - db-postgresql:/var/lib/postgresql
+      - db-postgresql:/var/lib/postgresql/data
     environment:
       - 'POSTGRES_HOST_AUTH_METHOD=trust'
     env_file:
@@ -38,7 +38,7 @@ services:
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
     volumes:
-      - db-redis:/var/lib/redis
+      - db-redis:/data
 
   redis-cache:
     image: redis:7-alpine
@@ -69,7 +69,7 @@ services:
     healthcheck:
        test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
     volumes:
-       - db-elasticsearch:/var/lib/elasticsearch
+       - db-elasticsearch:/usr/share/elasticsearch/data
     ulimits:
       memlock:
         soft: -1
