@@ -19,7 +19,7 @@ $DOC down
 echo "[ i ] Preparing instance ${DOMAIN}..."
 
 # Create db.env
-touch .env/db.env
+touch ./env/db.env
 echo "" > ./env/db.env
 
 __PG_HOST="postgresql"
@@ -63,7 +63,7 @@ echo "[ i ] Database environment file created."
 chmod 0600 ./env/db.env
 
 # Create app.env
-touch .env/app.env
+touch ./env/app.env
 echo "" > ./env/app.env
 
 echo "S3_ENABLED=false" >> ./env/app.env
