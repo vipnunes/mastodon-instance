@@ -1,13 +1,23 @@
 
 ## mastodon-instance
-Dockerized Mastodon instance - multiple instances behind master front proxy.
+Dockerized Mastodon instance - multiple instances behind master front proxy
+(and/or behind cascading proxies). Optimized for Joutsen Bulwark environment.
 
 **Usage:**
 
+- Create a new instance
 `./prepare.sh <domain.tld> <admin_username> <admin-email>`
 
-**Update:**
+- Remove everything
+`./wipe.sh`
 
-`./update.sh <new mastodon version, ie. v4.1.0>`
+- Start instance
+`./run.sh`
+
+- Stop instance
+`./stop.sh`
+
+- Update to specific tag
+`./update.sh <new mastodon version, ie. v4.1.1>`
 
 
