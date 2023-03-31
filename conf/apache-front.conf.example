@@ -3,7 +3,7 @@
 #
 #
 
-<VirtualHost <IPv4>:443 [<IPv6>]:443>
+<VirtualHost *:443>
 
 	ServerName <my-domain.tld>
 
@@ -26,6 +26,7 @@
 	ProxyRequests Off
 	ProxyPassMatch ^/~ !
 	ProxyPass /503.html !
+
 	# LetsEncrypt local
 	ProxyPass /.well-known/acme-challenge/ !
 
@@ -35,38 +36,21 @@
 
 	LimitRequestBody 0
 
-	Alias /.well-known /var/www/.well-known/
-
-        RewriteEngine on
-	RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK|OPTIONS|PROPFIND)
-	RewriteRule .* - [F]
-
-	<ifModule mod_deflate.c>
-		AddOutputFilterByType DEFLATE text/html text/xml text/css text/plain
-		AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript application/json
-	</ifModule>
-
 	CustomLog /var/log/apache2/mastodon-<my-domain.tld>.log combined
 	ErrorLog /var/log/apache2/mastodon-<my-domain.tld>.log
 </VirtualHost>
 
-
-<Virtualhost <IPv6>:80 [<IPv6>]:80>
+<Virtualhost *:80>
 
   ServerName <my-domain.tld>
 
   DocumentRoot /var/www/<my-domain.tld>
-  Alias /.well-known /var/www/.well-known
 
   RewriteEngine on
-  RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK|OPTIONS|PROPFIND)
-  RewriteRule .* - [F]
 
-  # LetsEncrypt
   ReWriteCond %{HTTPS} !on [OR]
   ReWriteCond %{SERVER_PORT} !^443$
   RewriteRule %{SERVER_HOST} ^(<my-domain.tld>)$
-  RewriteRule ^/\.well-known/(.*) "-" [L]
   RewriteRule ^/\.well-known/acme-challenge/(.*) "-" [L]
   RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [NC,R=301,L]
 
