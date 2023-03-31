@@ -14,6 +14,7 @@ services:
     depends_on:
       - web
       - streaming
+      - sidekiq
 
   postgresql:
     restart: always
@@ -97,7 +98,7 @@ services:
       - redis-cache
       - elasticsearch
     volumes:
-      - uploads:/mastodon/public/system
+      - data-uploads:/mastodon/public/system
       - './provision.sh:/provision.sh:ro'
 
   streaming:
@@ -134,7 +135,7 @@ services:
       - internal_network
       - external_network
     volumes:
-      - uploads:/mastodon/public/system
+      - data-uploads:/mastodon/public/system
     healthcheck:
       test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
 
@@ -150,8 +151,8 @@ services:
       - internal_network
       - external_network
     volumes:
-#      - uploads:/mastodon/public/system
-      - web:/web
+      - data-uploads:/mastodon/public/system
+      - data-web:/web
       - './provision.sh:/provision.sh:ro'
 
 networks:
@@ -160,12 +161,12 @@ networks:
     internal: true
 
 volumes:
-  web:
+  data-web:
     driver_opts:
       type: none
       device: ./data/web
       o: bind
-  uploads:
+  data-uploads:
     driver_opts:
       type: none
       device: ./data/web/system
