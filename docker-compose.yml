@@ -11,10 +11,10 @@ services:
     networks:
       - internal_network
       - external_network
-    depends_on:
-      - web
-      - streaming
-      - sidekiq
+#    depends_on:
+#      - web
+#      - streaming
+#      - sidekiq
 
   postgresql:
     restart: always
