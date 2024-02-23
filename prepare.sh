@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-[ $# -eq 0 ] && { echo "Usage: $0 <my-domain.tld> <admin_username> <admin-email@domain.tld>"; exit 1; }
+[ $# -eq 0 ] && { echo "Usage: $0 <mastodon.vipnunes.com> <vip> <contato@vipnunes.com>"; exit 1; }
 
 # structure
 mkdir -p ./data/{web,elasticsearch,postgresql,redis}
